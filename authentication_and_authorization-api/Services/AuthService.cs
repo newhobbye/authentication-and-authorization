@@ -1,4 +1,5 @@
-﻿using authentication_and_authorization_api.Models.Request.Auth;
+﻿using authentication_and_authorization_api.Interfaces;
+using authentication_and_authorization_api.Models.Request.Auth;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace authentication_and_authorization_api.Services
 {
-    public class AuthService
+    public class AuthService: IAuthService
     {
         private readonly IConfiguration _config;
 
