@@ -16,11 +16,19 @@ namespace authentication_and_authorization_api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("login")]
+        [HttpPost("login")]
         public async Task<IActionResult> LoginAsync([FromBody]LoginRequest request)
         {
+            try
+            {
+                string token = _authService.GenerateTokenAsync(request);
 
-            return Ok();
+                return Ok(token);
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Erro ao gerar o token"); 
+            }
         }
     }
 }
