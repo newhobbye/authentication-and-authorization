@@ -1,7 +1,9 @@
+using authentication_and_authorization_api.Filters;
 using authentication_and_authorization_api.Interfaces;
 using authentication_and_authorization_api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(x =>
+{
+    x.Filters.Add<ChangeResponseResultFilter>(1);
+});
 
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -36,7 +41,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Admin", policy =>
-        policy.RequireClaim("role", "Admin"));
+        policy.RequireClaim(ClaimTypes.Role, "Admin"));
 });
 
 builder.Services.AddScoped<IAuthService, AuthService>();

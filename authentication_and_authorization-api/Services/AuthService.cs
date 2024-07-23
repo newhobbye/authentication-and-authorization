@@ -26,7 +26,7 @@ namespace authentication_and_authorization_api.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, request.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, new Random().Next() .ToString()),
-                request.IsAdmin ? new Claim("role", "Admin") : new Claim("role", "User")
+                new Claim(ClaimTypes.Role, request.IsAdmin ? "Admin" : "User")
             };
 
             var token = new JwtSecurityToken(
